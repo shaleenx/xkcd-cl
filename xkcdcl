@@ -65,6 +65,9 @@ class XKCDCL:
         # Get the comic id from json data
         self.comic_id = data["num"]
 
+    def change_wallpaper(self, filename):
+        os.system("gsettings set org.gnome.desktop.background picture-uri file://" + filename)
+
     # Display the comic in the GUI system
     def display_comic(self):
         self.get_comic_url()
@@ -86,8 +89,9 @@ class XKCDCL:
             if not os.path.exists(directory):
                 os.makedirs(directory)
 
-	    comic.save(filename)
-	    fd.close()
+            comic.save(filename)
+            self.change_wallpaper(filename)
+            fd.close()
 
         except:
             print traceback.format_exc()
